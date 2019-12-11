@@ -38,7 +38,7 @@ use crate::algo::Measure;
 /// use petgraph::prelude::*;
 /// use std::collections::HashMap;
 ///
-/// let mut graph : Graph<(),(),Directed>= Graph::new();
+/// let mut graph : Graph<(),(),Directed,u32>= Graph::new();
 /// let a = graph.add_node(()); // node with no weight
 /// let b = graph.add_node(());
 /// let c = graph.add_node(());

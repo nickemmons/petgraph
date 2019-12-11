@@ -57,7 +57,7 @@ pub use super::simple_paths::all_simple_paths;
 /// use petgraph::algo::connected_components;
 /// use petgraph::prelude::*;
 ///
-/// let mut graph : Graph<(),(),Directed>= Graph::new();
+/// let mut graph : Graph<(),(),Directed,u32>= Graph::new();
 /// let a = graph.add_node(()); // node with no weight
 /// let b = graph.add_node(());
 /// let c = graph.add_node(());
@@ -440,7 +440,7 @@ pub fn tarjan_scc<G>(g: G) -> Vec<Vec<G::NodeId>>
 /// use petgraph::algo::condensation;
 /// use petgraph::prelude::*;
 ///
-/// let mut graph : Graph<(),(),Directed> = Graph::new();
+/// let mut graph : Graph<(),(),Directed,u32> = Graph::new();
 /// let a = graph.add_node(()); // node with no weight
 /// let b = graph.add_node(());
 /// let c = graph.add_node(());
@@ -482,7 +482,7 @@ pub fn tarjan_scc<G>(g: G) -> Vec<Vec<G::NodeId>>
 /// # use petgraph::algo::condensation;
 /// # use petgraph::prelude::*;
 /// #
-/// # let mut graph : Graph<(),(),Directed> = Graph::new();
+/// # let mut graph : Graph<(),(),Directed,u32> = Graph::new();
 /// # let a = graph.add_node(()); // node with no weight
 /// # let b = graph.add_node(());
 /// # let c = graph.add_node(());
@@ -701,7 +701,7 @@ pub struct NegativeCycle(());
 /// // Predecessor of f is Some(e) which predecessor is Some(d) which predecessor is Some(a).
 /// // Thus the path from a to f is a <-> d <-> e <-> f
 ///
-/// let graph_with_neg_cycle = Graph::<(), f32, Undirected>::from_edges(&[
+/// let graph_with_neg_cycle = Graph::<(), f32, Undirected, u32>::from_edges(&[
 ///         (0, 1, -2.0),
 ///         (0, 3, -4.0),
 ///         (1, 2, -1.0),

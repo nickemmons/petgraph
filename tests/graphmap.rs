@@ -266,7 +266,7 @@ fn test_into_graph() {
         (7, 4, 9),
         (4, 1, 10)]);
 
-    let graph: Graph<_, _, _> = gr.clone().into_graph();
+    let graph: Graph<_, _, _, u32> = gr.clone().into_graph();
     println!("{}", Dot::new(&gr));
     println!("{}", Dot::new(&graph));
 

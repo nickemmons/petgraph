@@ -6,6 +6,7 @@ use std::marker::PhantomData;
 use std::mem::size_of;
 use std::ops::{Index, IndexMut, Range};
 use std::slice;
+use borsh::{BorshDeserialize, BorshSerialize};
 
 use crate::{
     Direction, Outgoing, Incoming,
@@ -275,10 +276,10 @@ impl<E, Ix: IndexType> Edge<E, Ix>
 /// an illustration of how it could be rendered with graphviz (see
 /// [`Dot`](../dot/struct.Dot.html)):
 ///
-/// ```
+/// 
 /// use petgraph::Graph;
 ///
-/// let mut deps = Graph::<&str, &str>::new();
+/// let mut deps = Graph::<&str, &str, Directed, u32>::new();
 /// let pg = deps.add_node("petgraph");
 /// let fb = deps.add_node("fixedbitset");
 /// let qc = deps.add_node("quickcheck");
@@ -288,7 +289,7 @@ impl<E, Ix: IndexType> Edge<E, Ix>
 ///     (pg, fb), (pg, qc),
 ///     (qc, rand), (rand, libc), (qc, libc),
 /// ]);
-/// ```
+/// 
 ///
 /// ![graph-example](https://bluss.github.io/ndarray/images/graph-example.svg)
 ///
@@ -323,9 +324,13 @@ impl<E, Ix: IndexType> Edge<E, Ix>
 ///
 /// * Indices don't allow as much compile time checking as references.
 ///
-pub struct Graph<N, E, Ty = Directed, Ix = DefaultIx> {
-    nodes: Vec<Node<N, Ix>>,
-    edges: Vec<Edge<E, Ix>>,
+#[derive(
+    BorshDeserialize,
+    BorshSerialize,
+)]
+pub struct Graph<N, E, Ty, u32> {
+    nodes: Vec<Node<N, u32>>,
+    edges: Vec<Edge<E, u32>>,
     ty: PhantomData<Ty>,
 }
 
@@ -419,7 +424,7 @@ fn index_twice<T>(slc: &mut [T], a: usize, b: usize) -> Pair<&mut T> {
     }
 }
 
-impl<N, E> Graph<N, E, Directed>
+impl<N, E> Graph<N, E, Directed, u32>
 {
     /// Create a new `Graph` with directed edges.
     ///
@@ -432,7 +437,7 @@ impl<N, E> Graph<N, E, Directed>
     }
 }
 
-impl<N, E> Graph<N, E, Undirected>
+impl<N, E> Graph<N, E, Undirected, u32>
 {
     /// Create a new `Graph` with undirected edges.
     ///
@@ -956,9 +961,9 @@ impl<N, E, Ty, Ix> Graph<N, E, Ty, Ix>
     /// the following code will iterate through all nodes to find a
     /// specific index:
     ///
-    /// ```
+    /// 
     /// # use petgraph::Graph;
-    /// # let mut g = Graph::<&str, i32>::new();
+    /// # let mut g = Graph::<&str, i32, Directed, u32>::new();
     /// # g.add_node("book");
     /// let index = g.node_indices().find(|i| g[*i] == "book").unwrap();
     /// ```
@@ -1231,10 +1236,10 @@ impl<N, E, Ty, Ix> Graph<N, E, Ty, Ix>
     ///
     /// Nodes are inserted automatically to match the edges.
     ///
-    /// ```
+    /// 
     /// use petgraph::Graph;
     ///
-    /// let gr = Graph::<(), i32>::from_edges(&[
+    /// let gr = Graph::<(), i32, Directed, u32>::from_edges(&[
     ///     (0, 1), (0, 2), (0, 3),
     ///     (1, 2), (1, 3),
     ///     (2, 3),

@@ -11,11 +11,11 @@ use crate::visit::{GraphRef};
 ///
 /// # Examples
 ///
-/// ```
+/// 
 /// use petgraph::Graph;
 /// use petgraph::dot::{Dot, Config};
 ///
-/// let mut graph = Graph::<_, ()>::new();
+/// let mut graph = Graph::<_, (), Directed, u32>::new();
 /// graph.add_node("A");
 /// graph.add_node("B");
 /// graph.add_node("C");
