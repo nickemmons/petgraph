@@ -29,6 +29,7 @@ use crate::util::enumerate;
 #[cfg(feature = "serde-1")]
 mod serialization;
 
+
 /// The default integer type for graph indices.
 /// `u32` is the default to reduce the size of the graph's data and improve
 /// performance in the common case.
@@ -86,7 +87,7 @@ unsafe impl IndexType for u8 {
 
 /// Node identifier.
 #[derive(Copy, Clone, Default, PartialEq, PartialOrd, Eq, Ord, Hash)]
-pub struct NodeIndex<Ix = DefaultIx>(Ix);
+pub struct NodeIndex<Ix=DefaultIx>(Ix);
 
 impl<Ix: IndexType> NodeIndex<Ix>
 {
@@ -187,12 +188,12 @@ impl<Ix: IndexType> fmt::Debug for EdgeIndex<Ix>
 const DIRECTIONS: [Direction; 2] = [Outgoing, Incoming];
 
 /// The graph's node type.
-#[derive(Debug, BorshSerialize, BorshDeserialize)]
-pub struct Node<N, u32> {
+#[derive(Debug)]
+pub struct Node<N, Ix = DefaultIx> {
     /// Associated node data.
     pub weight: N,
     /// Next edge in outgoing and incoming edge lists.
-    next: [EdgeIndex<u32>; 2],
+    next: [EdgeIndex<Ix>; 2],
 }
 
 impl<E, Ix> Clone for Node<E, Ix> where E: Clone, Ix: Copy {
@@ -215,13 +216,13 @@ impl<N, Ix: IndexType> Node<N, Ix>
 
 /// The graph's edge type.
 #[derive(Debug)]
-pub struct Edge<E, u32> {
+pub struct Edge<E, Ix = DefaultIx> {
     /// Associated edge data.
     pub weight: E,
     /// Next edge in outgoing and incoming edge lists.
-    next: [EdgeIndex<u32>; 2],
+    next: [EdgeIndex<Ix>; 2],
     /// Start and End node index
-    node: [NodeIndex<u32>; 2],
+    node: [NodeIndex<Ix>; 2],
 }
 
 impl<E, Ix> Clone for Edge<E, Ix> where E: Clone, Ix: Copy {
