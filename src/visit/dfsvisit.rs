@@ -139,7 +139,7 @@ impl<B> Default for Control<B> {
 /// use petgraph::visit::depth_first_search;
 /// use petgraph::visit::{DfsEvent, Control};
 ///
-/// let gr: Graph<(), (), Directed, u32> = Graph::from_edges(&[
+/// let gr: Graph<(), ()> = Graph::from_edges(&[
 ///     (0, 1), (0, 2), (0, 3),
 ///     (1, 3),
 ///     (2, 3), (2, 4),

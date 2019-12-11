@@ -162,7 +162,7 @@ fn bfs() {
 fn mst() {
     use petgraph::data::FromElements;
 
-    let mut gr = Graph::<_,_,Directed,u32>::new();
+    let mut gr = Graph::<_,_>::new();
     let a = gr.add_node("A");
     let b = gr.add_node("B");
     let c = gr.add_node("C");
@@ -574,7 +574,7 @@ fn without()
     assert_eq!(term, vec![b, c, d]);
 }
 
-fn assert_is_topo_order<N, E>(gr: &Graph<N, E, Directed, u32>, order: &[NodeIndex])
+fn assert_is_topo_order<N, E>(gr: &Graph<N, E, Directed>, order: &[NodeIndex])
 {
     assert_eq!(gr.node_count(), order.len());
     // check all the edges of the graph
@@ -591,7 +591,7 @@ fn assert_is_topo_order<N, E>(gr: &Graph<N, E, Directed, u32>, order: &[NodeInde
 
 #[test]
 fn test_toposort() {
-    let mut gr = Graph::<_,_,Directed,u32>::new();
+    let mut gr = Graph::<_,_>::new();
     let a = gr.add_node("A");
     let b = gr.add_node("B");
     let c = gr.add_node("C");
@@ -630,7 +630,7 @@ fn test_toposort() {
 
 #[test]
 fn test_toposort_eq() {
-    let mut g = Graph::<_,_,Directed,u32>::new();
+    let mut g = Graph::<_,_>::new();
     let a = g.add_node("A");
     let b = g.add_node("B");
     g.add_edge(a, b, ());
@@ -640,7 +640,7 @@ fn test_toposort_eq() {
 
 #[test]
 fn is_cyclic_directed() {
-    let mut gr = Graph::<_,_,Directed,u32>::new();
+    let mut gr = Graph::<_,_>::new();
     let a = gr.add_node("A");
     let b = gr.add_node("B");
     let c = gr.add_node("C");
@@ -695,7 +695,7 @@ fn assert_sccs_eq(mut res: Vec<Vec<NodeIndex>>, mut answer: Vec<Vec<NodeIndex>>,
 
 #[test]
 fn scc() {
-    let gr: Graph<(), (), Directed, u32> = Graph::from_edges(&[
+    let gr: Graph<(), ()> = Graph::from_edges(&[
         (6, 0),
         (0, 3),
         (3, 6),
@@ -751,7 +751,7 @@ fn scc() {
     ], true);
 
     // Kosaraju bug from PR #60
-    let mut gr = Graph::<(), (), Directed, u32>::new();
+    let mut gr = Graph::<(), ()>::new();
     gr.extend_with_edges(&[
         (0, 0),
         (1, 0),
@@ -769,7 +769,7 @@ fn scc() {
 
 #[test]
 fn tarjan_scc() {
-    let gr: Graph<(), (), Directed, u32> = Graph::from_edges(&[
+    let gr: Graph<(), ()> = Graph::from_edges(&[
         (6, 0),
         (0, 3),
         (3, 6),
@@ -819,7 +819,7 @@ fn tarjan_scc() {
     ], true);
 
     // Kosaraju bug from PR #60
-    let mut gr = Graph::<(), (), Directed, u32>::new();
+    let mut gr = Graph::<(), ()>::new();
     gr.extend_with_edges(&[
         (0, 0),
         (1, 0),
@@ -838,7 +838,7 @@ fn tarjan_scc() {
 #[test]
 fn condensation()
 {
-    let gr: Graph<(), (), Directed, u32> = Graph::from_edges(&[
+    let gr: Graph<(), ()> = Graph::from_edges(&[
         (6, 0),
         (0, 3),
         (3, 6),
@@ -913,7 +913,7 @@ fn connected_comp()
 #[test]
 fn oob_index()
 {
-    let mut gr = Graph::<_, (), Directed, u32>::new();
+    let mut gr = Graph::<_, ()>::new();
     let a = gr.add_node(0);
     let b = gr.add_node(1);
     gr.remove_node(a);
@@ -969,7 +969,7 @@ fn u8_index_overflow_edges()
 
 #[test]
 fn test_weight_iterators() {
-    let mut gr = Graph::<_,_,Directed,u32>::new();
+    let mut gr = Graph::<_,_>::new();
     let a = gr.add_node("A");
     let b = gr.add_node("B");
     let c = gr.add_node("C");
@@ -1022,7 +1022,7 @@ fn test_weight_iterators() {
 
 #[test]
 fn walk_edges() {
-    let mut gr = Graph::<_,_,Directed,u32>::new();
+    let mut gr = Graph::<_,_>::new();
     let a = gr.add_node(0.);
     let b = gr.add_node(1.);
     let c = gr.add_node(2.);
@@ -1065,7 +1065,7 @@ fn walk_edges() {
 
 #[test]
 fn index_twice_mut() {
-    let mut gr = Graph::<_,_,Directed,u32>::new();
+    let mut gr = Graph::<_,_>::new();
     let a = gr.add_node(0.);
     let b = gr.add_node(0.);
     let c = gr.add_node(0.);
@@ -1111,7 +1111,7 @@ fn index_twice_mut() {
 #[test]
 fn toposort_generic() {
     // This is a DAG, visit it in order
-    let mut gr = Graph::<_,_,Directed,u32>::new();
+    let mut gr = Graph::<_,_>::new();
     let b = gr.add_node(("B", 0.));
     let a = gr.add_node(("A", 0.));
     let c = gr.add_node(("C", 0.));
@@ -1171,7 +1171,7 @@ fn toposort_generic() {
 #[test]
 fn test_has_path() {
     // This is a DAG, visit it in order
-    let mut gr = Graph::<_,_,Directed,u32>::new();
+    let mut gr = Graph::<_,_>::new();
     let b = gr.add_node(("B", 0.));
     let a = gr.add_node(("A", 0.));
     let c = gr.add_node(("C", 0.));
@@ -1267,7 +1267,7 @@ fn map_filter_map() {
 #[test]
 fn from_edges() {
     let n = NodeIndex::new;
-    let gr = Graph::<(), (), Undirected, u32>::from_edges(&[
+    let gr = Graph::<(), (), Undirected>::from_edges(&[
         (0, 1), (0, 2), (0, 3),
         (1, 2), (1, 3),
         (2, 3),
@@ -1283,7 +1283,7 @@ fn from_edges() {
 
 #[test]
 fn retain() {
-    let mut gr = Graph::<i32, i32, Undirected, u32>::from_edges(&[
+    let mut gr = Graph::<i32, i32, Undirected>::from_edges(&[
         (0, 1, 2),
         (1, 1, 1),
         (0, 2, 0),
@@ -1327,7 +1327,7 @@ fn assert_graph_consistent<N, E, Ty, Ix>(g: &Graph<N, E, Ty, Ix>)
 #[test]
 fn neighbors_selfloops() {
     // Directed graph
-    let mut gr = Graph::<_ ,(), Directed, u32>::new();
+    let mut gr = Graph::<_ ,()>::new();
     let a = gr.add_node("a");
     let b = gr.add_node("b");
     let c = gr.add_node("c");
@@ -1375,7 +1375,7 @@ fn neighbors_selfloops() {
     assert_eq!(&seen_walk, &undir_edges);
 
     // Undirected graph
-    let mut gr: Graph<_, (), _, u32> = Graph::new_undirected();
+    let mut gr: Graph<_, (), _> = Graph::new_undirected();
     let a = gr.add_node("a");
     let b = gr.add_node("b");
     let c = gr.add_node("c");
@@ -1422,7 +1422,7 @@ fn degree<'a, G>(g: G, node: G::NodeId) -> usize
 #[cfg(feature = "graphmap")]
 #[test]
 fn degree_sequence() {
-    let mut gr = Graph::<usize, (), Undirected, u32>::from_edges(&[
+    let mut gr = Graph::<usize, (), Undirected>::from_edges(&[
         (0, 1),
         (1, 2), (1, 3),
         (2, 4), (3, 4),
@@ -1674,7 +1674,7 @@ fn dfs_visit() {
     use petgraph::visit::DfsEvent::*;
     use petgraph::visit::{Time, depth_first_search};
     use petgraph::visit::Control;
-    let gr: Graph<(), (), Directed, u32> = Graph::from_edges(&[
+    let gr: Graph<(), ()> = Graph::from_edges(&[
         (0, 5), (0, 2), (0, 3), (0, 1),
         (1, 3),
         (2, 3), (2, 4),
@@ -1768,7 +1768,7 @@ fn dfs_visit() {
 fn filtered_post_order() {
     use petgraph::visit::NodeFiltered;
 
-    let mut gr: Graph<(), (), Directed, u32> = Graph::from_edges(&[
+    let mut gr: Graph<(), ()> = Graph::from_edges(&[
         (0, 2),
         (1, 2),
         (0, 3),

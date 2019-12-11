@@ -208,7 +208,7 @@ const S2: &'static str = "
 ";
 
 /// Parse a text adjacency matrix format into a directed graph
-fn parse_graph<Ty: EdgeType>(s: &str) -> Graph<(), (), Ty, u32>
+fn parse_graph<Ty: EdgeType>(s: &str) -> Graph<(), (), Ty>
 {
     let mut gr = Graph::with_capacity(0, 0);
     let s = s.trim();
@@ -232,16 +232,16 @@ fn parse_graph<Ty: EdgeType>(s: &str) -> Graph<(), (), Ty, u32>
     gr
 }
 
-fn str_to_graph(s: &str) -> Graph<(), (), Undirected, u32> {
+fn str_to_graph(s: &str) -> Graph<(), (), Undirected> {
     parse_graph(s)
 }
 
-fn str_to_digraph(s: &str) -> Graph<(), (), Directed, u32> {
+fn str_to_digraph(s: &str) -> Graph<(), (), Directed> {
     parse_graph(s)
 }
 
 /// Parse a file in adjacency matrix format into a directed graph
-fn graph_from_file(path: &str) -> Graph<(), (), Directed, u32>
+fn graph_from_file(path: &str) -> Graph<(), (), Directed>
 {
     let mut f = File::open(path).expect("file not found");
     let mut contents = String::new();
@@ -396,8 +396,8 @@ fn s12_not_iso()
 #[test]
 fn iso1()
 {
-    let mut g0 = Graph::<_, (), Directed, u32>::new();
-    let mut g1 = Graph::<_, (), Directed, u32>::new();
+    let mut g0 = Graph::<_, ()>::new();
+    let mut g1 = Graph::<_, ()>::new();
     assert!(petgraph::algo::is_isomorphic(&g0, &g1));
 
     // very simple cases
@@ -420,8 +420,8 @@ fn iso1()
 #[test]
 fn iso2()
 {
-    let mut g0 = Graph::<_, (), Directed, u32>::new();
-    let mut g1 = Graph::<_, (), Directed, u32>::new();
+    let mut g0 = Graph::<_, ()>::new();
+    let mut g1 = Graph::<_, ()>::new();
 
     let a0 = g0.add_node(0);
     let a1 = g1.add_node(0);
@@ -467,7 +467,7 @@ fn iso2()
 
 #[test]
 fn iso_matching() {
-    let g0 = Graph::<(), _, Directed, u32>::from_edges(&[
+    let g0 = Graph::<(), _>::from_edges(&[
         (0, 0, 1),
         (0, 1, 2),
         (0, 2, 3),
@@ -501,7 +501,7 @@ fn iso_large() {
 #[should_panic]
 #[test]
 fn iso_multigraph_failure() {
-    let g0 = Graph::<(), (), Directed, u32>::from_edges(&[
+    let g0 = Graph::<(), ()>::from_edges(&[
         (0, 0),
         (0, 0),
         (0, 1),
@@ -510,7 +510,7 @@ fn iso_multigraph_failure() {
         (1, 0),
     ]);
 
-    let g1 = Graph::<(), (), Directed, u32>::from_edges(&[
+    let g1 = Graph::<(), ()>::from_edges(&[
         (0, 0),
         (0, 1),
         (0, 1),

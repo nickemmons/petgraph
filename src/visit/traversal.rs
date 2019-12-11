@@ -16,11 +16,11 @@ use std::collections::VecDeque;
 /// a traversal over a graph while still retaining mutable access to it, if you
 /// use it like the following example:
 ///
-/// 
+/// ```
 /// use petgraph::Graph;
 /// use petgraph::visit::Dfs;
 ///
-/// let mut graph = Graph::<_,(),Directed,u32>::new();
+/// let mut graph = Graph::<_,()>::new();
 /// let a = graph.add_node(0);
 ///
 /// let mut dfs = Dfs::new(&graph, a);
@@ -30,7 +30,7 @@ use std::collections::VecDeque;
 /// }
 ///
 /// assert_eq!(graph[a], 1);
-/// 
+/// ```
 ///
 /// **Note:** The algorithm may not behave correctly if nodes are removed
 /// during iteration. It may not necessarily visit added nodes or edges.
@@ -202,11 +202,11 @@ impl<N, VM> DfsPostOrder<N, VM>
 /// a traversal over a graph while still retaining mutable access to it, if you
 /// use it like the following example:
 ///
-/// 
+/// ```
 /// use petgraph::Graph;
 /// use petgraph::visit::Bfs;
 ///
-/// let mut graph = Graph::<_,(),Directed,u32>::new();
+/// let mut graph = Graph::<_,()>::new();
 /// let a = graph.add_node(0);
 ///
 /// let mut bfs = Bfs::new(&graph, a);
@@ -216,7 +216,7 @@ impl<N, VM> DfsPostOrder<N, VM>
 /// }
 ///
 /// assert_eq!(graph[a], 1);
-/// 
+/// ```
 ///
 /// **Note:** The algorithm may not behave correctly if nodes are removed
 /// during iteration. It may not necessarily visit added nodes or edges.
