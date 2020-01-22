@@ -15,7 +15,6 @@ use crate::util::enumerate;
 use crate::visit::EdgeRef;
 use crate::visit::{IntoEdges, IntoEdgesDirected, IntoNodeReferences};
 
-#[cfg(feature = "serde-1")]
 mod serialization;
 
 /// The default integer type for graph indices.
