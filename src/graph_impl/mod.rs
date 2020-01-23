@@ -1,3 +1,4 @@
+#![feature(associated_type_bounds)]
 use std::cmp;
 use std::fmt;
 use std::hash::Hash;
@@ -6,6 +7,8 @@ use std::marker::PhantomData;
 use std::mem::size_of;
 use std::ops::{Index, IndexMut, Range};
 use std::slice;
+use std::io::{Error, ErrorKind, Read, Write};
+use borsh::{BorshDeserialize, BorshSerialize};
 
 use crate::{Directed, Direction, EdgeType, Incoming, IntoWeightedEdge, Outgoing, Undirected};
 
@@ -16,6 +19,7 @@ use crate::visit::EdgeRef;
 use crate::visit::{IntoEdges, IntoEdgesDirected, IntoNodeReferences};
 
 mod serialization;
+mod borsh_serialization;
 
 /// The default integer type for graph indices.
 /// `u32` is the default to reduce the size of the graph's data and improve
@@ -328,7 +332,8 @@ impl<E, Ix: IndexType> Edge<E, Ix> {
 ///
 /// * Indices don't allow as much compile time checking as references.
 ///
-pub struct Graph<N, E, Ty = Directed, Ix = DefaultIx> {
+pub struct Graph<N, E, Ty = Directed, Ix = DefaultIx> 
+{
     nodes: Vec<Node<N, Ix>>,
     edges: Vec<Edge<E, Ix>>,
     ty: PhantomData<Ty>,

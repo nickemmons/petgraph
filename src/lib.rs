@@ -118,6 +118,8 @@ extern crate serde_derive;
 #[cfg(all(feature = "serde-1", test))]
 extern crate itertools;
 
+extern crate borsh;
+
 #[doc(no_inline)]
 pub use crate::graph::Graph;
 
@@ -152,6 +154,7 @@ pub mod matrix_graph;
 mod quickcheck;
 #[cfg(feature = "serde-1")]
 mod serde_utils;
+mod borsh_utils;
 mod simple_paths;
 mod traits_graph;
 pub mod unionfind;
